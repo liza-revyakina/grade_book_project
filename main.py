@@ -48,17 +48,15 @@ class Student:
             values.append(value)
         return sum(values) / len(values)
 
-    # Метод для сравнения экземпляра класса (студента) с другим экземпляром класса (студентом)
-    def rating(self, student2):
-        if self.average_grade() > student2.average_grade():
-            output = f"Средняя оценка выше у {self.name} {self.surname}"
-            return output
-        elif student2.average_grade() > self.average_grade():
-            output = f"Средняя оценка выше у {student2.name} {student2.surname}"
-            return output
-        else:
-            output = f"Средние оценки равны"
-            return output
+    # Методы для сравнения экземпляра класса (студента) с другим экземпляром класса (студентом)
+    def __gt__(self, student2):
+        return self.average_grade() > student2.average_grade()
+
+    def __lt__(self, student2):
+        return self.average_grade() < student2.average_grade()
+
+    def __eq__(self, student2):
+        return self.average_grade() == student2.average_grade()
 
 
 class Mentor:
@@ -118,17 +116,15 @@ class Lecturer(Mentor):
             values.append(value)
         return sum(values) / len(values)
 
-    # Метод для сравнения экземпляра класса (лектора) с другим экземпляром класса (лектором)
-    def rating(self, lecturer2):
-        if self.average_grade() > lecturer2.average_grade():
-            output = f"Средняя оценка выше у {self.name} {self.surname}"
-            return output
-        elif lecturer2.average_grade() > self.average_grade():
-            output = f"Средняя оценка выше у {lecturer2.name} {lecturer2.surname}"
-            return output
-        else:
-            output = f"Средние оценки равны"
-            return output
+    # Методы для сравнения экземпляра класса (лектора) с другим экземпляром класса (лектором)
+    def __gt__(self, lecturer2):
+        return self.average_grade() > lecturer2.average_grade()
+
+    def __lt__(self, lecturer2):
+        return self.average_grade() < lecturer2.average_grade()
+
+    def __eq__(self, lecturer2):
+        return self.average_grade() == lecturer2.average_grade()
 
 
 # Функция для определения среднего балла всех лекторов за конкретный курс
@@ -213,12 +209,6 @@ print(f"Средний балл лектора {some_lecturer.name} {some_lectur
 print(f"Средний балл лектора {other_lecturer.name} {other_lecturer.surname} "
       f"за курс {current_course}: {other_lecturer.average_course_grade(current_course)}")
 
-# Проверка функции сравнения экземпляра класса с другим экземпляром
-print(f"\nСравнение по среднему баллу")
-print(f"Сравнение студентов {some_student.name} {some_student.surname} и {other_student.name} {other_student.surname} "
-      f"по среднему баллу: {some_student.rating(other_student)}")
-print(f"Сравнение лекторов {some_lecturer.name} {some_lecturer.surname} и "
-      f"{other_lecturer.name} {other_lecturer.surname} по среднему баллу: {some_lecturer.rating(other_lecturer)}")
 
 # Проверка функции для подсчета среднего балла в рамках курса
 lecturers = [some_lecturer, other_lecturer]
@@ -238,3 +228,23 @@ print(f"\n{other_lecturer}")
 print(f"\nИнформация о проверяющих")
 print(f"\n{some_reviewer}")
 print(f"\n{other_reviewer}")
+
+# Проверка перегруженных методов сравнение
+print(f"\nУ {some_student.name} {some_student.surname} средний балл выше, "
+      f"чем у {other_student.name} {other_student.surname}?")
+print(some_student > other_student)
+print(f"\nУ {some_lecturer.name} {some_lecturer.surname} средний балл выше, "
+      f"чем у {other_lecturer.name} {other_lecturer.surname}?")
+print(some_lecturer > other_lecturer)
+print(f"\nУ {some_student.name} {some_student.surname} средний балл ниже, "
+      f"чем у {other_student.name} {other_student.surname}?")
+print(some_student < other_student)
+print(f"\nУ {some_lecturer.name} {some_lecturer.surname} средний балл ниже, "
+      f"чем у {other_lecturer.name} {other_lecturer.surname}?")
+print(some_lecturer < other_lecturer)
+print(f"\nУ {some_student.name} {some_student.surname} средний балл равен "
+      f"{other_student.name} {other_student.surname}?")
+print(some_student == other_student)
+print(f"\nУ {some_lecturer.name} {some_lecturer.surname} средний балл равен "
+      f"{other_lecturer.name} {other_lecturer.surname}?")
+print(some_lecturer == other_lecturer)
